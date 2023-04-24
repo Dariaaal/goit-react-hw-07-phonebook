@@ -22,6 +22,12 @@ const handleUpdate = (state, { payload }) => {
     state.error = null
 }
 
+const handleDelete = (state, { payload }) => {
+    state.isLoading = false
+    state.items = state.items.filter(item => item.id !== payload.id)
+    state.error = null
+}
+
 
 const contactsSlice = createSlice({
     name: 'contacts',
@@ -35,7 +41,7 @@ const contactsSlice = createSlice({
             .addCase(addContact.fulfilled, handleUpdate)
             .addCase(addContact.rejected, handleRejected)
             .addCase(deleteContact.pending, handlePending)
-            .addCase(deleteContact.fulfilled, handleFulfilled)
+            .addCase(deleteContact.fulfilled, handleDelete)
             .addCase(deleteContact.rejected, handleRejected)
     }
 });
