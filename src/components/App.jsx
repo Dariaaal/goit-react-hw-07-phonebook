@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "../redux/filterReducer";
 import * as contactsOperations from "../redux/contactsOperations";
-import * as contactsSelectors from "../redux/contactsSelectors"
+import * as contactsSelectors from "../redux/contactsSelectors";
 
 export default function App() {
     
@@ -20,25 +20,25 @@ export default function App() {
       dispatch(contactsOperations.fetchContacts());
     },[dispatch])
 
-//   const formSubmitHandler = data => {
+  const formSubmitHandler = data => {
 
-//     const contact = {
-//       id: nanoid(),
-//       ...data
-//     }
+    const contact = {
+      id: nanoid(),
+      ...data
+    }
 
-//     const dublicateContact = contacts.find(item => item.name === contact.name)
+    const dublicateContact = contacts.find(item => item.name === contact.name)
 
-//     if (dublicateContact) {
-//       return alert (`${data.name} is already in contacts` )
-//     }
+    if (dublicateContact) {
+      return alert (`${data.name} is already in contacts` )
+    }
 
-//     dispatch(contactsOperations.addContact(contact));
-//   }
+    dispatch(contactsOperations.addContact(contact));
+  }
 
-//   const onDeleteContact = id => {
-//     dispatch(contactsOperations.deleteContact(id));
-//  }
+  const onDeleteContact = id => {
+    dispatch(contactsOperations.deleteContact(id));
+ }
  
   const changeFilter = e => {
     const filterValue = e.target.value
@@ -61,11 +61,11 @@ export default function App() {
           }}
         >
 
-        {/* <h1>Phonebook</h1>
-        <CardForm onSubmit={formSubmitHandler}/> */}
+        <h1>Phonebook</h1>
+        <CardForm onSubmit={formSubmitHandler}/>
         <h2>Contacts</h2>
         <Filter filter={filter} onChangeFilter={changeFilter}/>
-        <CardList contacts={visibleContacts}/>
+        <CardList contacts={visibleContacts} onDeleteContact={onDeleteContact}/>
         </div>
       );
 }
