@@ -19,7 +19,7 @@ const handleRejected = (state, {payload}) => {
 const handleUpdate = (state, { payload }) => {
     state.isLoading = false
     state.items.push(payload)
-    state.error = ''
+    state.error = null
 }
 
 
