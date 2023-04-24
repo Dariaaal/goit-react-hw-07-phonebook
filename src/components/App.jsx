@@ -1,38 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CardForm from "./phonebook/CardForm";
 import CardList from "./phonebook/CardList";
 import Filter from "./phonebook/Filter";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteContact, addContact, setFilter } from "../store/store";
+import { setFilter } from "../redux/filterReducer";
+import * as contactsOperations from "../redux/contactsOperations";
+import * as contactsSelectors from "../redux/contactsSelectors"
 
 export default function App() {
     
     const dispatch = useDispatch();
 
-    const contacts = useSelector(state => state.contacts);
+    const contacts = useSelector(contactsSelectors.getContacts);
 
     const filter = useSelector(state => state.filter);
 
-  const formSubmitHandler = data => {
+    useEffect(() => {
+      dispatch(contactsOperations.fetchContacts());
+    },[dispatch])
 
-    const contact = {
-      id: nanoid(),
-      ...data
-    }
+//   const formSubmitHandler = data => {
 
-    const dublicateContact = contacts.find(item => item.name === contact.name)
+//     const contact = {
+//       id: nanoid(),
+//       ...data
+//     }
 
-    if (dublicateContact) {
-      return alert (`${data.name} is already in contacts` )
-    }
+//     const dublicateContact = contacts.find(item => item.name === contact.name)
 
-    dispatch(addContact(contact));
-  }
+//     if (dublicateContact) {
+//       return alert (`${data.name} is already in contacts` )
+//     }
 
-  const onDeleteContact = id => {
-    dispatch(deleteContact(id));
- }
+//     dispatch(contactsOperations.addContact(contact));
+//   }
+
+//   const onDeleteContact = id => {
+//     dispatch(contactsOperations.deleteContact(id));
+//  }
  
   const changeFilter = e => {
     const filterValue = e.target.value
@@ -54,12 +60,12 @@ export default function App() {
             color: '#010101'
           }}
         >
-        
-        <h1>Phonebook</h1>
-        <CardForm onSubmit={formSubmitHandler}/>
+
+        {/* <h1>Phonebook</h1>
+        <CardForm onSubmit={formSubmitHandler}/> */}
         <h2>Contacts</h2>
         <Filter filter={filter} onChangeFilter={changeFilter}/>
-        <CardList contacts={visibleContacts} onDeleteContact={onDeleteContact}/>
+        <CardList contacts={visibleContacts}/>
         </div>
       );
 }
