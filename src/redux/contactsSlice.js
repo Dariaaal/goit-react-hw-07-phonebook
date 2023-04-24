@@ -1,4 +1,4 @@
-import { createReducer, combineReducers, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { fetchContacts, addContact, deleteContact } from "./contactsOperations";
 
 const handlePending = (state) => {
@@ -31,12 +31,12 @@ const contactsSlice = createSlice({
             .addCase(fetchContacts.pending, handlePending)
             .addCase(fetchContacts.fulfilled, handleFulfilled)
             .addCase(fetchContacts.rejected, handleRejected)
-            // .addCase(addContact.pending, handlePending)
-            // .addCase(addContact.fulfilled, handleUpdate)
-            // .addCase(addContact.rejected, handleRejected)
-            // .addCase(deleteContact.pending, handlePending)
-            // .addCase(deleteContact.fulfilled, handleFulfilled)
-            // .addCase(deleteContact.rejected, handleRejected)
+            .addCase(addContact.pending, handlePending)
+            .addCase(addContact.fulfilled, handleUpdate)
+            .addCase(addContact.rejected, handleRejected)
+            .addCase(deleteContact.pending, handlePending)
+            .addCase(deleteContact.fulfilled, handleFulfilled)
+            .addCase(deleteContact.rejected, handleRejected)
     }
 });
 
